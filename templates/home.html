@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ahmad</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6  border border-secondary" style="background-color:papayawhip;">
+                <h3>Upload Raw Image</h3>
+                <form method="post" action="/" enctype="multipart/form-data">
+                    <input type="file" name="file" autocomplete="off" required>
+                    <p>
+                        <input type="submit" value="Submit">
+                    </p>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6  border border-secondary" style="background-color:lightblue">
+                <h3>Retrieve Thumbnail</h3>
+                <button id="retrieve1" type="button" onclick="getThumbnail()" class="btn btn-info">Retrieve</button>
+                <div>
+                    <img id="thumbnail-img">
+                    <h3 id="error-txt"></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function getThumbnail() {
+         document.getElementById('error-txt').textContent = "";
+         document.getElementById('thumbnail-img').src = "#";
+        console.log("clicked")
+        $.ajax({
+            type: "GET",
+            url: "/view",
+            success: function (result) {
+                document.getElementById('thumbnail-img').src = 'data:image/gif;base64,' + result;
+            },
+            error: function (result) {
+                document.getElementById('error-txt').textContent = 'No thumbnail is in processed queue';
+            }
+        });
+    }
+</script>
+</body>
+</html>
